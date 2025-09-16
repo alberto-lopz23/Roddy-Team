@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link type="text/css" rel="stylesheet" href="style.css"/>
+  </head>
+  <body>
+    <!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Credenciales Planes</title>
+  <style>
+    body{
+      margin:0;
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:30px;
+      background:#111;
+      font-family:Arial, sans-serif;
+      flex-wrap:wrap;
+      padding:20px;
+    }
+
+    /* marco del teléfono */
+    .phone{
+      width:260px;
+      height:520px;
+      background:#000;
+      border-radius:30px;
+      padding:14px;
+      position:relative;
+      box-shadow:0 15px 35px rgba(0,0,0,0.7);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .notch{
+      position:absolute;
+      top:6px;
+      left:50%;
+      transform:translateX(-50%);
+      width:100px;
+      height:20px;
+      background:#111;
+      border-radius:10px;
+    }
+
+    .screen{
+      width:100%;
+      height:100%;
+      border-radius:24px;
+      background:#0f0f0f;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    /* tarjeta */
+    .card{
+      width:200px;
+      border-radius:16px;
+      padding:14px;
+      background:#1a1a1a;
+      border:1px solid rgba(255,255,255,0.1);
+      color:white;
+      text-align:center;
+    }
+
+    .avatar{
+      width:64px;
+      height:64px;
+      border-radius:50%;
+      margin:0 auto 10px;
+      overflow:hidden;
+      border:3px solid currentColor;
+    }
+    .avatar img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .name{
+      font-size:16px;
+      font-weight:700;
+    }
+    .id{ font-size:12px; color:#aaa; margin-bottom:8px;}
+
+    .status{
+      font-size:13px;
+      font-weight:600;
+      margin:8px 0;
+    }
+
+    .plan{
+      font-size:28px;
+      font-weight:800;
+      margin:14px 0;
+      text-transform:uppercase;
+    }
+
+    .expires{
+      font-size:12px;
+      color:#bbb;
+    }
+
+    /* estilos por plan */
+    .premium .card{ border-color:#3498db; }
+    .premium .avatar{ border-color:#3498db; }
+    .premium .plan{ color:#3498db; }
+
+    .vip .card{ border-color:#f39c12; }
+    .vip .avatar{ border-color:#f39c12; }
+    .vip .plan{ color:#f39c12; }
+
+    .elite .card{ border-color:#c8102e; }
+    .elite .avatar{ border-color:#c8102e; }
+    .elite .plan{ color:#c8102e; }
+  </style>
+</head>
+<body>
+
+  <!-- PREMIUM -->
+  <div class="phone premium">
+    <div class="notch"></div>
+    <div class="screen">
+      <div class="card">
+        <div class="avatar"><img src="photo.jpg" alt=""></div>
+        <div class="name">Ana Pérez</div>
+        <div class="id">ID: 001</div>
+        <div class="status">Estado: ACTIVO</div>
+        <div class="plan">Premium</div>
+        <div class="expires">Expira: 12 Dic 2025</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIP -->
+  <div class="phone vip">
+    <div class="notch"></div>
+    <div class="screen">
+      <div class="card">
+        <div class="avatar"><img src="photo.jpg" alt=""></div>
+        <div class="name">Carlos Gómez</div>
+        <div class="id">ID: 002</div>
+        <div class="status">Estado: ACTIVO</div>
+        <div class="plan">VIP</div>
+        <div class="expires">Expira: 12 Dic 2025</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ELITE -->
+  <div class="phone elite">
+    <div class="notch"></div>
+    <div class="screen">
+      <div class="card">
+        <div class="avatar"><img src="photo.jpg" alt=""></div>
+        <div class="name">José Reyes</div>
+        <div class="id">ID: 003</div>
+        <div class="status">Estado: ACTIVO</div>
+        <div class="plan">Elite</div>
+        <div class="expires">Expira: 12 Dic 2025</div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
+
+    <script type="module" src="script.js"></script>
+  </body>
+</html>
