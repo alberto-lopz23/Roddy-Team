@@ -1,10 +1,4 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <link type="text/css" rel="stylesheet" href="style.css"/>
-  </head>
-  <body>
-    <!doctype html>
 <html lang="es">
 <head>
   <meta charset="utf-8" />
@@ -17,11 +11,8 @@
       display:flex;
       justify-content:center;
       align-items:center;
-      gap:30px;
       background:#111;
       font-family:Arial, sans-serif;
-      flex-wrap:wrap;
-      padding:20px;
     }
 
     /* marco del teléfono */
@@ -57,6 +48,34 @@
       display:flex;
       align-items:center;
       justify-content:center;
+      flex-direction:column;
+      padding:15px;
+      box-sizing:border-box;
+      position:relative;
+    }
+
+    /* lista de planes */
+    .plan-list{
+      display:flex;
+      flex-direction:column;
+      gap:15px;
+      width:100%;
+    }
+    .plan-btn{
+      background:#1a1a1a;
+      border:1px solid #e50914;
+      border-radius:12px;
+      padding:15px;
+      text-align:center;
+      font-size:18px;
+      font-weight:bold;
+      color:#e50914;
+      cursor:pointer;
+      transition:all 0.2s;
+    }
+    .plan-btn:hover{
+      transform:scale(1.05);
+      background:#222;
     }
 
     /* tarjeta */
@@ -84,29 +103,11 @@
       object-fit:cover;
     }
 
-    .name{
-      font-size:16px;
-      font-weight:700;
-    }
-    .id{ font-size:12px; color:#aaa; margin-bottom:8px;}
-
-    .status{
-      font-size:13px;
-      font-weight:600;
-      margin:8px 0;
-    }
-
-    .plan{
-      font-size:28px;
-      font-weight:800;
-      margin:14px 0;
-      text-transform:uppercase;
-    }
-
-    .expires{
-      font-size:12px;
-      color:#bbb;
-    }
+    .name{ font-size:16px; font-weight:700; }
+    .id{ font-size:12px; color:#aaa; margin-bottom:8px; }
+    .status{ font-size:13px; font-weight:600; margin:8px 0; }
+    .plan{ font-size:28px; font-weight:800; margin:14px 0; text-transform:uppercase; }
+    .expires{ font-size:12px; color:#bbb; }
 
     /* estilos por plan */
     .premium .card{ border-color:#3498db; }
@@ -120,58 +121,123 @@
     .elite .card{ border-color:#c8102e; }
     .elite .avatar{ border-color:#c8102e; }
     .elite .plan{ color:#c8102e; }
+
+    .back-btn{
+      margin-top:15px;
+      background:#e50914;
+      border:none;
+      color:white;
+      padding:10px 15px;
+      border-radius:8px;
+      cursor:pointer;
+      font-weight:bold;
+    }
+    .back-btn:hover{ background:#b20710; }
+
+    /* nuevo estilo para el botón de menú */
+    .menu-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+    }
+    .menu-btn:hover {
+      color: #e50914;
+    }
+
+    /* nuevo estilo para el menú desplegable */
+    .menu-options {
+      position: absolute;
+      top: 60px;
+      right: 10px;
+      background: #2a2a2a;
+      border-radius: 8px;
+      padding: 10px;
+      display: none; /* Oculto por defecto */
+      flex-direction: column;
+      gap: 5px;
+      z-index: 10;
+    }
+    .menu-options.show {
+      display: flex;
+    }
+    .menu-options div {
+      color: white;
+      padding: 8px 12px;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+    .menu-options div:hover {
+      background: #3a3a3a;
+    }
   </style>
 </head>
 <body>
 
-  <!-- PREMIUM -->
-  <div class="phone premium">
+  <div class="phone">
     <div class="notch"></div>
-    <div class="screen">
-      <div class="card">
-        <div class="avatar"><img src="photo.jpg" alt=""></div>
-        <div class="name">Ana Pérez</div>
-        <div class="id">ID: 001</div>
-        <div class="status">Estado: ACTIVO</div>
-        <div class="plan">Premium</div>
-        <div class="expires">Expira: 12 Dic 2025</div>
+    <div class="screen" id="screen">
+      <div class="plan-list">
+        <div class="plan-btn" onclick="showPlan('premium')">Premium</div>
+        <div class="plan-btn" onclick="showPlan('vip')">VIP</div>
+        <div class="plan-btn" onclick="showPlan('elite')">Elite</div>
       </div>
     </div>
   </div>
 
-  <!-- VIP -->
-  <div class="phone vip">
-    <div class="notch"></div>
-    <div class="screen">
-      <div class="card">
-        <div class="avatar"><img src="photo.jpg" alt=""></div>
-        <div class="name">Carlos Gómez</div>
-        <div class="id">ID: 002</div>
-        <div class="status">Estado: ACTIVO</div>
-        <div class="plan">VIP</div>
-        <div class="expires">Expira: 12 Dic 2025</div>
-      </div>
-    </div>
-  </div>
+  <script>
+    function showPlan(tipo){
+      const screen = document.getElementById('screen');
+      screen.className = "screen " + tipo;
 
-  <!-- ELITE -->
-  <div class="phone elite">
-    <div class="notch"></div>
-    <div class="screen">
-      <div class="card">
-        <div class="avatar"><img src="photo.jpg" alt=""></div>
-        <div class="name">José Reyes</div>
-        <div class="id">ID: 003</div>
-        <div class="status">Estado: ACTIVO</div>
-        <div class="plan">Elite</div>
-        <div class="expires">Expira: 12 Dic 2025</div>
-      </div>
-    </div>
-  </div>
+      let data = {
+        premium: { nombre:"Ana Pérez", id:"001", plan:"Premium", expira:"12 Dic 2025" },
+        vip: { nombre:"Carlos Gómez", id:"002", plan:"VIP", expira:"12 Dic 2025" },
+        elite: { nombre:"José Reyes", id:"003", plan:"Elite", expira:"12 Dic 2025" }
+      };
+
+      let p = data[tipo];
+
+      screen.innerHTML = `
+        <button class="menu-btn" onclick="toggleMenu()">⋮</button>
+        <div class="menu-options" id="menuOptions">
+          <div>Pagos</div>
+          <div>Plan</div>
+          <div>Codigo QR</div>
+        </div>
+        <div class="card">
+          <div class="avatar"><img src="photo.jpg" alt=""></div>
+          <div class="name">${p.nombre}</div>
+          <div class="id">ID: ${p.id}</div>
+          <div class="status">Estado: ACTIVO</div>
+          <div class="plan">${p.plan}</div>
+          <div class="expires">Expira: ${p.expira}</div>
+        </div>
+        <button class="back-btn" onclick="goBack()">Mapa de beneficios</button>
+      `;
+    }
+
+    function toggleMenu() {
+      const menu = document.getElementById('menuOptions');
+      menu.classList.toggle('show');
+    }
+
+    function goBack(){
+      const screen = document.getElementById('screen');
+      screen.className = "screen";
+      screen.innerHTML = `
+        <div class="plan-list">
+          <div class="plan-btn" onclick="showPlan('premium')">Premium</div>
+          <div class="plan-btn" onclick="showPlan('vip')">VIP</div>
+          <div class="plan-btn" onclick="showPlan('elite')">Elite</div>
+        </div>
+      `;
+    }
+  </script>
 
 </body>
-</html>
-
-    <script type="module" src="script.js"></script>
-  </body>
 </html>
