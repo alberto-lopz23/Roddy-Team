@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Búsqueda Usuarios</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #111;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+    }
+
+    /* marco del teléfono */
+    .phone {
+      width: 260px;
+      height: 520px;
+      background: #000;
+      border-radius: 30px;
+      padding: 14px;
+      position: relative;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .notch {
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 20px;
+      background: #111;
+      border-radius: 10px;
+    }
+
+    .screen {
+      width: 100%;
+      height: 100%;
+      border-radius: 24px;
+      background: #0f0f0f;
+      color: white;
+      padding: 15px;
+      box-sizing: border-box;
+      overflow-y: auto;
+      -ms-overflow-style: none;
+      /* Oculta la barra en Internet Explorer y Edge */
+      scrollbar-width: none;
+    }
+
+
+    h2 {
+      margin: 0 0 10px;
+      font-size: 16px;
+      text-align: center;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      background: #1a1a1a;
+      border: 1px solid #e50914;
+      border-radius: 12px;
+      padding: 15px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #e50914;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    li:hover {
+      background: #2a2a2a;
+    }
+
+    /* tarjeta */
+    .card {
+      width: 200px;
+      border-radius: 16px;
+      padding: 14px;
+      background: #1a1a1a;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: white;
+      text-align: center;
+      margin: 40px auto 0;
+    }
+
+    .avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      margin: 0 auto 10px;
+      overflow: hidden;
+      border: 3px solid currentColor;
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .name {
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .id {
+      font-size: 12px;
+      color: #aaa;
+      margin-bottom: 8px;
+    }
+
+    .status {
+      font-size: 13px;
+      font-weight: 600;
+      margin: 8px 0;
+    }
+
+    .plan {
+      font-size: 22px;
+      font-weight: 800;
+      margin: 14px 0;
+      text-transform: uppercase;
+    }
+
+    .expires {
+      font-size: 12px;
+      color: #bbb;
+    }
+
+    /* estilos por plan */
+    .premium .card {
+      border-color: #3498db;
+    }
+
+    .premium .avatar {
+      border-color: #3498db;
+    }
+
+    .premium .plan {
+      color: #3498db;
+    }
+
+    .vip .card {
+      border-color: #f39c12;
+    }
+
+    .vip .avatar {
+      border-color: #f39c12;
+    }
+
+    .vip .plan {
+      color: #f39c12;
+    }
+
+    .elite .card {
+      border-color: #c8102e;
+    }
+
+    .elite .avatar {
+      border-color: #c8102e;
+    }
+
+    .elite .plan {
+      color: #c8102e;
+    }
+
+    .back-btn {
+      margin-top: 10px;
+      padding: 6px 10px;
+      background: #222;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      cursor: pointer;
+    }
+
+    .back-btn:hover {
+      background: #333;
+    }
+
+    .no-results {
+      text-align: center;
+      color: #aaa;
+      margin-top: 20px;
+    }
+
+    .save-date-btn {
+      display: block;
+      width: calc(100% - 20px);
+      padding: 8px;
+      background: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+      margin: 15px auto 0;
+    }
+
+    .save-date-btn:hover {
+      background: #45a049;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="phone">
+    <div class="notch"></div>
+    <div class="screen">
+      <!-- Barra de búsqueda -->
+      <h2>Buscar Usuario</h2>
+      <input type="text" id="searchInput" placeholder="Escribe un nombre o ID...">
+
+      <!-- Lista de usuarios -->
+      <ul id="userList"></ul>
+
+      <!-- Card del usuario -->
+      <div id="userCard" style="display:none;"></div>
+    </div>
+  </div>
+
+  <script>
+    const users = [
+  { id: '001', name: 'Ana Pérez', plan: 'premium', status: 'ACTIVO', expires: '12 Dic 2025', photo: 'photo.jpg' },
+  { id: '002', name: 'Carlos Gómez', plan: 'vip', status: 'ACTIVO', expires: '12 Dic 2025', photo: 'photo.jpg' },
+  { id: '003', name: 'José Reyes', plan: 'elite', status: 'ACTIVO', expires: '12 Dic 2025', photo: 'photo.jpg' },
+  { id: '004', name: 'María Rodríguez', plan: 'premium', status: 'ACTIVO', expires: '05 Ene 2026', photo: 'photo.jpg' },
+  { id: '005', name: 'Luis Fernández', plan: 'vip', status: 'ACTIVO', expires: '20 Nov 2025', photo: 'photo.jpg' },
+  { id: '006', name: 'Elena Martínez', plan: 'elite', status: 'ACTIVO', expires: '30 Oct 2025', photo: 'photo.jpg' },
+  { id: '007', name: 'Pedro Sánchez', plan: 'premium', status: 'ACTIVO', expires: '15 Sep 2025', photo: 'photo.jpg' },
+  { id: '008', name: 'Laura Torres', plan: 'vip', status: 'ACTIVO', expires: '01 Dic 2025', photo: 'photo.jpg' },
+  { id: '009', name: 'Andrés López', plan: 'elite', status: 'ACTIVO', expires: '22 Ago 2026', photo: 'photo.jpg' },
+  { id: '010', name: 'Sofía Ramírez', plan: 'premium', status: 'ACTIVO', expires: '11 Feb 2026', photo: 'photo.jpg' },
+  { id: '011', name: 'Diego Castillo', plan: 'vip', status: 'ACTIVO', expires: '18 Ene 2026', photo: 'photo.jpg' },
+  { id: '012', name: 'Valentina Morales', plan: 'elite', status: 'ACTIVO', expires: '07 Mar 2026', photo: 'photo.jpg' }
+];
+
+
+    const userList = document.getElementById("userList");
+    const userCard = document.getElementById("userCard");
+    const searchInput = document.getElementById("searchInput");
+
+    function renderList(filteredUsers = users) {
+      userList.innerHTML = "";
+      if (filteredUsers.length === 0) {
+        userList.innerHTML = `<li class="no-results">No pudimos encontrar el usuario</li>`;
+        return;
+      }
+      filteredUsers.forEach(u => {
+        const li = document.createElement("li");
+        li.textContent = `${u.name} (${u.id.toUpperCase()})`;
+        li.onclick = () => showUser(u);
+        userList.appendChild(li);
+      });
+    }
+
+    function showUser(user) {
+      userList.style.display = "none";
+      userCard.style.display = "block";
+      searchInput.style.display = "none"
+      userCard.className = user.plan;
+      userCard.innerHTML = `
+        <div class="card">
+          <div class="avatar"><img src="${user.photo}" alt=""></div>
+          <div class="name">${user.name}</div>
+          <div class="id">ID: ${user.id}</div>
+          <div class="status">Estado: ${user.status}</div>
+          <div class="plan">${user.plan}</div>
+          <div class="expires">Expira: ${user.expires}</div>
+          <button class="save-date-btn" onclick="saveDate()">Check in</button>
+          <button class="back-btn" onclick="goBack()">Volver</button>
+        </div>
+      `;
+    }
+
+    function goBack() {
+      userCard.style.display = "none";
+      userList.style.display = "block";
+      searchInput.style.display = "block"
+
+    }
+
+    function saveDate() {
+const now = new Date();
+const formattedDate = now.toLocaleDateString('es-ES', {
+year: 'numeric',
+month: 'long',
+day: 'numeric'
+});
+alert(`Fecha guardada: ${formattedDate}`);
+}
+
+    searchInput.addEventListener("input", e => {
+      const text = e.target.value.toLowerCase();
+      const filtered = users.filter(u => u.name.toLowerCase().includes(text) || u.id.includes(text));
+      renderList(filtered);
+    });
+
+    // Render inicial
+    renderList();
+  </script>
+</body>
+
+</html>
